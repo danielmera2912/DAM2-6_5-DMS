@@ -1,6 +1,7 @@
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import mu.KotlinLogging
+import un6.eje6_5.GestorDeLibrosIUT1
 import java.util.*
 
 private val logger = KotlinLogging.logger("Ejemplo")
@@ -71,7 +72,7 @@ internal fun main() {
 }
 
 
-public class CatalogoLibrosJSON(cargador:String)
+open class CatalogoLibrosJSON(cargador:String): GestorDeLibrosIUT1
 {
 
     private lateinit var libros: List<Book>
@@ -85,11 +86,11 @@ public class CatalogoLibrosJSON(cargador:String)
     {
         CatalogoLibrosXML.l.info {"[Clase]"+ msg }
     }
-    fun infoLibro(idLibro: String): Map<String, Any> {
+    override fun infoLibro(idLibro: String): Map<String, Any> {
         var book = libros.first{ it.id == idLibro }
         return book.serializeToMap()
     }
-    fun existeLibro(idLibro: String): Boolean {
+    override fun existeLibro(idLibro: String): Boolean {
         return libros.indexOfFirst { it.id == idLibro } >=0
     }
 }

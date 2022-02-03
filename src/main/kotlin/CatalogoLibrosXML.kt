@@ -3,11 +3,12 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import un6.eje6_5.GestorDeLibrosIUT1
 import java.io.File
 import java.time.LocalDate
 import javax.xml.parsers.DocumentBuilderFactory
 
-class CatalogoLibrosXML(private val cargador: String) {
+open class CatalogoLibrosXML(private val cargador: String) : GestorDeLibrosIUT1 {
 
     companion object {
         val l = KotlinLogging.logger("LOG")
@@ -26,12 +27,12 @@ class CatalogoLibrosXML(private val cargador: String) {
         }
     }
 
-    private fun readXml(pathName: String): Document {
+    open fun readXml(pathName: String): Document {
         val xmlFile = File(pathName)
         return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile)
     }
 
-    private fun obtenerListaNodosPorNombre(doc: Document, tagName: String): MutableList<Node> {
+    open fun obtenerListaNodosPorNombre(doc: Document, tagName: String): MutableList<Node> {
         val bookList: NodeList = doc.getElementsByTagName(tagName)
         val lista = mutableListOf<Node>()
         for (i in 0..bookList.length - 1)
@@ -39,7 +40,7 @@ class CatalogoLibrosXML(private val cargador: String) {
         return lista
     }
 
-    fun obtenerAtributosEnMapKV(e: Element): MutableMap<String, String> {
+    open fun obtenerAtributosEnMapKV(e: Element): MutableMap<String, String> {
         val mMap = mutableMapOf<String, String>()
         for (j in 0..e.attributes.length - 1)
             mMap.putIfAbsent(e.attributes.item(j).nodeName, e.attributes.item(j).nodeValue)
@@ -50,7 +51,7 @@ class CatalogoLibrosXML(private val cargador: String) {
     *
     * @return  Devuelve true si existe, `false` en caso contrario.
     * */
-    fun existeLibro(idLibro: String): Boolean {
+    override fun existeLibro(idLibro: String): Boolean {
         var existe: Boolean
         if (idLibro.isNullOrBlank())
             existe = false
@@ -74,7 +75,7 @@ class CatalogoLibrosXML(private val cargador: String) {
       *
       * @return  Devuelve true si existe, `false` en caso contrario.
       * */
-    fun infoLibro(idLibro: String): Map<String, Any> {
+    override fun infoLibro(idLibro: String): Map<String, Any> {
         var m = mutableMapOf<String, Any>()
         if (!idLibro.isNullOrBlank())
             xmlDoc?.let {
