@@ -14,7 +14,7 @@ internal fun i(tag: String, msg: String) {
 fun main() {
     var portatil = "Catalog.xml"
     val XML= CatalogoLibrosXML(portatil)
-    val JSON= CatalogoLibrosJSON(portatil)
+    //val JSON= CatalogoLibrosJSON(portatil)
     val idiomaESP= GestorDeLibrosEsp()
     val idiomaEN= GestorDeLibrosEn()
     val gestorDeLibros = gestionLibrosIU(XML,idiomaESP)
@@ -32,11 +32,6 @@ interface GestorDeLibrosIUT1{
 
 }
 interface GestorDeLibrosIUT2{
-    val pregunta: String
-    val afirmacion: String
-    val negacion: String
-    val infoLibro: String
-    val noInfoLibro: String
     fun realizarPregunta()
     fun realizarAfirmacion()
     fun realizarNegacion()
@@ -44,67 +39,38 @@ interface GestorDeLibrosIUT2{
     fun realizarNoInfo()
 }
 open class GestorDeLibrosEsp(): GestorDeLibrosIUT2{
-    override var pregunta: String
-        get() = TODO("Not yet implemented")
-        set(value) {"Introduzca un ID: "}
-    override var afirmacion: String
-        get() = TODO("Not yet implemented")
-        set(value) {"El libro existe!"}
-    override var negacion: String
-        get() = TODO("Not yet implemented")
-        set(value) {"El libro NO existe!"}
-    override var infoLibro: String
-        get() = TODO("Not yet implemented")
-        set(value) {"La información sobre es la siguiente\n"}
-    override var noInfoLibro: String
-        get() = TODO("Not yet implemented")
-        set(value) {"No se encontró información sobre el libro"}
+
     override fun realizarPregunta(){
-        println(pregunta)
+        println("Introduzca un ID: ")
     }
     override fun realizarAfirmacion(){
-        println(afirmacion)
+        println("El libro existe!")
     }
     override fun realizarNegacion(){
-        println(negacion)
+        println("El libro NO existe!")
     }
     override fun realizarInfo(){
-        println(infoLibro)
+        println("La información sobre es la siguiente\n")
     }
     override fun realizarNoInfo(){
-        println(noInfoLibro)
+        println("No se encontró información sobre el libro")
     }
 }
 open class GestorDeLibrosEn(): GestorDeLibrosIUT2{
-    override var pregunta: String
-        get() = TODO("Not yet implemented")
-        set(value) {"Enter an ID "}
-    override var afirmacion: String
-        get() = TODO("Not yet implemented")
-        set(value) {"The book exists!"}
-    override var negacion: String
-        get() = TODO("Not yet implemented")
-        set(value) {"the book doesn't exists!"}
-    override var infoLibro: String
-        get() = TODO("Not yet implemented")
-        set(value) {"The information about is as follows\n"}
-    override var noInfoLibro: String
-        get() = TODO("Not yet implemented")
-        set(value) {"No information found about the book"}
     override fun realizarPregunta(){
-        println(pregunta)
+        println("Enter an ID ")
     }
     override fun realizarAfirmacion(){
-        println(afirmacion)
+        println("The book exists!")
     }
     override fun realizarNegacion(){
-        println(negacion)
+        println("the book doesn't exists!")
     }
     override fun realizarInfo(){
-        println(infoLibro)
+        println("The information about is as follows\n")
     }
     override fun realizarNoInfo(){
-        println(noInfoLibro)
+        println("No information found about the book")
     }
 }
 open class gestionLibrosIU(val lib: GestorDeLibrosIUT1, val idioma: GestorDeLibrosIUT2)
@@ -133,7 +99,7 @@ open class gestionLibrosIU(val lib: GestorDeLibrosIUT1, val idioma: GestorDeLibr
                 idioma.realizarInfo()
                 println(infoLibro)
             }else{
-                idioma.noInfoLibro
+                idioma.realizarNoInfo()
             }
         }
 
